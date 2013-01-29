@@ -10,12 +10,12 @@ import (
  */
 
 type Option struct {
-	Required bool
 	Name string
 	Tiny byte
 	Verbose string
 	Description string
-	Callback *func
+	Required bool
+	Callback func()
 }
 
 /**
@@ -26,20 +26,37 @@ type Commander struct {
 	Name string
 	Version string
 	Options []Option
-	Args []string
 }
 
 /**
  * `Parse` arguments
  */
 
-func (commander *Commander) Parse() {}
+func (commander *Commander) Parse() {
+	args := os.Args
+
+	for i := range args {
+		fmt.Println(args[i])
+	}
+}
 
 /**
  * `Add` `option` to the commander instance
  */
 
-func (commander *Commander) Add(option *Option) {}
+func (commander *Commander) Add(name string, tiny byte, verbose string, 
+								description string, required bool, callback func()) {
+	option := new(Option)
+
+	option.Name = name
+	option.Tiny = tiny
+	option.Verbose = verbose
+	option.Description = description
+	option.Required = required
+	option.Callback = callback
+
+	append(*commander).Options, option)
+}
 
 /**
  * Display the usage of `commander`
@@ -51,6 +68,6 @@ func (commander *Commander) Usage() {}
  * Return the total number of arguments
  */
 
-func (commander *Commander) NArgs() int {
-	return len((*commander).args)
+func (commander *Commander) Len() int {
+	return len(os.Args)
 }
