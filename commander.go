@@ -11,7 +11,7 @@ import (
 
 type Option struct {
 	Name string
-	Tiny byte
+	Tiny rune
 	Verbose string
 	Description string
 	Required bool
@@ -44,25 +44,26 @@ func (commander *Commander) Parse() {
  * `Add` `option` to the commander instance
  */
 
-func (commander *Commander) Add(name string, tiny byte, verbose string, 
-								description string, required bool, callback func()) {
-	option := new(Option)
-
-	option.Name = name
-	option.Tiny = tiny
-	option.Verbose = verbose
-	option.Description = description
-	option.Required = required
-	option.Callback = callback
-
-	append(*commander).Options, option)
+func (commander *Commander) Add(option *Option) {
+	append(commander.Options, option)
 }
 
 /**
  * Display the usage of `commander`
  */
 
-func (commander *Commander) Usage() {}
+func (commander *Commander) Usage() {
+	fmt.Fprintf(os.Stderr, "\n  Usage: %s [options]\n\n", commander.Name)
+	fmt.Fprintf(os.Stderr, "  Options:\n");
+
+	options := &commander.Options
+	for i := range options {
+		fmt.Fprintf(os.Stderr, "    %s, %s %s",
+			options[i].Tiny, options[i].Verbose, options[i].Description)
+	}
+	fmt.Fprintf(os.Stderr, "\n")
+	os.Exit(1)
+}
 
 /**
  * Return the total number of arguments
