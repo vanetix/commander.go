@@ -45,7 +45,7 @@ func (commander *Commander) Parse() {
  */
 
 func (commander *Commander) Add(option *Option) {
-	append(commander.Options, option)
+	commander.Options = append(commander.Options, *option)
 }
 
 /**
