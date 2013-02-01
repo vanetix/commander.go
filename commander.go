@@ -11,7 +11,7 @@ import (
 
 type Option struct {
 	Name string
-	Tiny rune
+	Tiny byte
 	Verbose string
 	Description string
 	Required bool
