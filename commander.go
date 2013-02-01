@@ -56,9 +56,9 @@ func (commander *Commander) Usage() {
 	fmt.Fprintf(os.Stderr, "\n  Usage: %s [options]\n\n", commander.Name)
 	fmt.Fprintf(os.Stderr, "  Options:\n");
 
-	options := &commander.Options
+	options := commander.Options
 	for i := range options {
-		fmt.Fprintf(os.Stderr, "    %s, %s %s",
+		fmt.Fprintf(os.Stderr, "    -%c, --%s %s",
 			options[i].Tiny, options[i].Verbose, options[i].Description)
 	}
 	fmt.Fprintf(os.Stderr, "\n")
