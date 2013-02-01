@@ -33,11 +33,19 @@ type Commander struct {
  */
 
 func (commander *Commander) Parse() {
-	args := os.Args
+	args := commander.explode(os.Args[1:])
 
+	if(len(*args) == 0) {
+		commander.Usage();
+	}
+}
+
+func (commander *Commander) explode(args []string) *[]string {
 	for i := range args {
 		fmt.Println(args[i])
 	}
+
+	return &args
 }
 
 /**
