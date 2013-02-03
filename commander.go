@@ -3,6 +3,7 @@ package commander
 import (
 	"os"
 	"fmt"
+	"unicode/utf8"
 )
 
 /**
@@ -41,11 +42,22 @@ func (commander *Commander) Parse() {
 }
 
 func (commander *Commander) explode(args []string) *[]string {
+	newargs := make([]string, len(args))
+
 	for i := range args {
-		fmt.Println(args[i])
+		arg := args[i]
+		l := utf8.RuneCountInString(arg)
+
+		if l > 2 && arg[0] == '-' && arg[1] != '-' {
+			for i := 1; i < l; i++ {
+				newargs = append(newargs, "-" + string(arg[i]))
+			}
+		} else {
+			newargs = append(newargs, arg)
+		}
 	}
 
-	return &args
+	return &newargs
 }
 
 /**
