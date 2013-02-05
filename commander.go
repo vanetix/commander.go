@@ -12,11 +12,11 @@ import (
 
 type Option struct {
 	Name string
-	Tiny byte
+	Tiny string
 	Verbose string
 	Description string
 	Required bool
-	Callback func()
+	Callback func(...string)
 }
 
 /**
@@ -34,29 +34,33 @@ type Commander struct {
  */
 
 func (commander *Commander) Parse() {
+	fmt.Println(os.Args)
 	args := commander.explode(os.Args[1:])
-	l := len(args)
 
-	for i := range commander.Options {
+	for i, l := 0, len(commander.Options); i < l; i++ {
 		option := commander.Options[i]
 
-		for j := range args {
+		for j, l := 0, len(args); j < l; j++ {
 			arg := args[j]
-
-			if utf8.RuneCountInString(arg) < 2 {
-				prog.Usage()
-			}
+			fmt.Println(arg)
 
 			if option.Tiny == arg || option.Verbose == arg {
-				if l - 1 > j && !args[j + 1][0] == '-' {
+				fmt.Println("Found arg")
+				if j != l && args[j + 1][0] != '-' {
 					option.Callback(args[j + 1])
 				} else {
 					option.Callback()
 				}
+			} else {
+				fmt.Println("No find")
+				if option.Required && j == l - 1 {
+					fmt.Println("Required")
+					// Option is required and not found
+					fmt.Fprintf(os.Stderr, "%s, %s is required.", option.Tiny, option.Description)
+				}
 			}
 		}
 	}
-
 }
 
 func (commander *Commander) explode(args []string) []string {

@@ -13,11 +13,11 @@ func main() {
 
 	option := &commander.Option{
 		Name: "help",
-		Tiny: 'h',
-		Verbose: "help",
+		Tiny: "-h",
+		Verbose: "--help",
 		Description: "display usage",
 		Required: true,
-		Callback: func() {
+		Callback: func(...string) {
 			prog.Usage()
 		},
 	}
