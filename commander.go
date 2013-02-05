@@ -34,31 +34,28 @@ type Commander struct {
  */
 
 func (commander *Commander) Parse() {
-	fmt.Println(os.Args)
 	args := commander.explode(os.Args[1:])
 
 	for i, l := 0, len(commander.Options); i < l; i++ {
 		option := commander.Options[i]
 
+		found := false
 		for j, l := 0, len(args); j < l; j++ {
 			arg := args[j]
-			fmt.Println(arg)
 
 			if option.Tiny == arg || option.Verbose == arg {
-				fmt.Println("Found arg")
-				if j != l && args[j + 1][0] != '-' {
+				if j != l  - 1 && args[j + 1][0] != '-' {
 					option.Callback(args[j + 1])
+					j++
 				} else {
 					option.Callback()
 				}
-			} else {
-				fmt.Println("No find")
-				if option.Required && j == l - 1 {
-					fmt.Println("Required")
-					// Option is required and not found
-					fmt.Fprintf(os.Stderr, "%s, %s is required.", option.Tiny, option.Description)
-				}
+				found = true
 			}
+		}
+		if option.Required && !found {
+			// Option is required and not found
+			fmt.Fprintf(os.Stderr, "%s, %s is required.", option.Tiny, option.Description)
 		}
 	}
 }
@@ -100,7 +97,7 @@ func (commander *Commander) Usage() {
 
 	options := commander.Options
 	for i := range options {
-		fmt.Fprintf(os.Stderr, "    -%c, --%s %s",
+		fmt.Fprintf(os.Stderr, "    %s, %s %s",
 			options[i].Tiny, options[i].Verbose, options[i].Description)
 	}
 	fmt.Fprintf(os.Stderr, "\n")
