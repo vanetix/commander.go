@@ -11,19 +11,29 @@ func main() {
 		Version: "0.0.1",
 	}
 
-	option := &commander.Option{
+	help := &commander.Option{
 		Name: "help",
 		Tiny: "-h",
 		Verbose: "--help",
 		Description: "display usage",
-		Required: true,
+		Required: false,
 		Callback: func(...string) {
 			prog.Usage()
 		},
 	}
 
-	prog.Add(option)
+	version := &commander.Option{
+		Name: "version",
+		Tiny: "-v",
+		Verbose: "--version",
+		Description: "display version",
+		Required: false,
+		Callback: func(...string) {
+			fmt.Printf("  Version: %s\n", prog.Version)
+		},
+	}
 
-	fmt.Println(prog)
+	prog.Add(help)
+	prog.Add(version)
 	prog.Parse()
 }
