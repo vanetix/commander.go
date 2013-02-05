@@ -60,7 +60,7 @@ func (commander *Commander) Parse() {
 }
 
 func (commander *Commander) explode(args []string) []string {
-	newargs := make([]string, len(args))
+	newargs := make([]string, 0, len(args))
 
 	for i := range args {
 		arg := args[i]
