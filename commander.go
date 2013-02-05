@@ -35,13 +35,31 @@ type Commander struct {
 
 func (commander *Commander) Parse() {
 	args := commander.explode(os.Args[1:])
+	l := len(args)
 
-	if(len(*args) == 0) {
-		commander.Usage();
+	for i := range commander.Options {
+		option := commander.Options[i]
+
+		for j := range args {
+			arg := args[j]
+
+			if utf8.RuneCountInString(arg) < 2 {
+				prog.Usage()
+			}
+
+			if option.Tiny == arg || option.Verbose == arg {
+				if l - 1 > j && !args[j + 1][0] == '-' {
+					option.Callback(args[j + 1])
+				} else {
+					option.Callback()
+				}
+			}
+		}
 	}
+
 }
 
-func (commander *Commander) explode(args []string) *[]string {
+func (commander *Commander) explode(args []string) []string {
 	newargs := make([]string, len(args))
 
 	for i := range args {
@@ -57,7 +75,7 @@ func (commander *Commander) explode(args []string) *[]string {
 		}
 	}
 
-	return &newargs
+	return newargs
 }
 
 /**
