@@ -1,6 +1,6 @@
 commander.go
 ============
-*More unix like argument parsing for go* Heavily inspired by: [commander.c](https://github.com/visionmedia/commander.c)
+*More unix like argument parsing for go.* Heavily inspired by: [commander.c](https://github.com/visionmedia/commander.c)
 
 ## Installing
 `go get github.com/vanetix/commander.go`
