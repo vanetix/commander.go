@@ -1,29 +1,36 @@
 commander.go
 ============
-*More unix like argument parsing for go*
+*More unix like argument parsing for go* Heavily inspired by: [commander.c](https://github.com/visionmedia/commander.c)
 
-Heavily inspired by: [commander.c](https://github.com/visionmedia/commander.c)
+## Installing
+`go get github.com/vanetix/commander.go`
 
-### Usage
+## Usage
 ```go
-commander := Commander{
-    Name: "commander",
-    Version: "1.0.0",
+func doWork(args ...string) {
+	// Do some work
 }
 
-commander.Add(Option{
-    Required: false,
-    Name: "Help",
-    Tiny: 'h',
-    Verbose: "help",
-    Description: "Display usage information",
-    Callback: commander.Usage,
-})
+func main() {
+	program := commander.Init("Program", "0.1.3")
 
-commander.Parse()
+	commander.Add(&commander.Option{
+	    Required: false,
+	    Name: "Work",
+	    Tiny: "-w",
+	    Verbose: "--work",
+	    Description: "do some work",
+	    Callback: doWork,
+	})
+
+	commander.Parse()
+}
 ```
 
-### License (MIT)
+## Release history
+- 0.0.1 - Initial stable version
+
+## License (MIT)
 Copyright (c) 2013 Matt McFarland
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
