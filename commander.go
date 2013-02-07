@@ -30,6 +30,41 @@ type Commander struct {
 }
 
 /**
+ * Initialize a new commander with `args`
+ */
+
+func Init(name string, version string) *Commander {
+	p := &Commander{
+		Name: name,
+		Version: version,
+	}
+
+	p.Add(&Option{
+		Name: "help",
+		Tiny: "-h",
+		Verbose: "--help",
+		Description: "display usage",
+		Required: false,
+		Callback: func(args ...string) {
+			p.Usage()
+		},
+	})
+
+	p.Add(&Option{
+		Name: "help",
+		Tiny: "-h",
+		Verbose: "--help",
+		Description: "display usage",
+		Required: false,
+		Callback: func(args ...string) {
+			fmt.Fprintf(os.Stdout, "  Version: %s", p.Version)
+		},
+	})
+
+	return p
+}
+
+/**
  * `Parse` arguments
  */
 
