@@ -1,5 +1,4 @@
-commander.go
-============
+# commander.go [![Build Status](https://travis-ci.org/vanetix/commander.go.png?branch=master)](https://travis-ci.org/vanetix/commander.go)
 *More unix like argument parsing for go.* Heavily inspired by: [commander.c](https://github.com/visionmedia/commander.c)
 
 ## Installing
