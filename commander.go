@@ -51,10 +51,10 @@ func Init(name string, version string) *Commander {
 	})
 
 	p.Add(&Option{
-		Name: "help",
-		Tiny: "-h",
-		Verbose: "--help",
-		Description: "display usage",
+		Name: "version",
+		Tiny: "-V",
+		Verbose: "--version",
+		Description: "display version",
 		Required: false,
 		Callback: func(args ...string) {
 			fmt.Fprintf(os.Stdout, "  Version: %s", p.Version)
