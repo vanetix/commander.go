@@ -118,8 +118,10 @@ func (commander *Commander) explode(args []string) []string {
  * `Add` `option` to the commander instance
  */
 
-func (commander *Commander) Add(option *Option) {
-	commander.Options = append(commander.Options, *option)
+func (commander *Commander) Add(options ...*Option) {
+	for i := range options {
+		commander.Options = append(commander.Options, *options[i])
+	}
 }
 
 /**
