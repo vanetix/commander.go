@@ -57,7 +57,7 @@ func Init(name string, version string) *Commander {
 		Description: "display version",
 		Required: false,
 		Callback: func(args ...string) {
-			fmt.Fprintf(os.Stdout, "  Version: %s", p.Version)
+			fmt.Fprintf(os.Stdout, "  Version: %s\n", p.Version)
 		},
 	})
 
