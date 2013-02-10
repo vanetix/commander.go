@@ -27,7 +27,7 @@ func main() {
 ```
 
 ## Release history
-- 0.0.1 - Initial stable version
+- 1.0.0 - Initial stable version
 
 ## License (MIT)
 Copyright (c) 2013 Matt McFarland
