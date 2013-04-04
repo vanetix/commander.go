@@ -6,6 +6,8 @@
 
 ## Usage
 ```go
+import "github.com/vanetix/commander.go"
+
 func doWork(args ...string) {
 	// Do some work
 }
@@ -13,7 +15,7 @@ func doWork(args ...string) {
 func main() {
 	program := commander.Init("Program", "0.1.3")
 
-	commander.Add(&commander.Option{
+	program.Add(&commander.Option{
 	    Required: false,
 	    Name: "Work",
 	    Tiny: "-w",
@@ -22,7 +24,7 @@ func main() {
 	    Callback: doWork,
 	})
 
-	commander.Parse()
+	program.Parse()
 }
 ```
 
