@@ -57,7 +57,7 @@ func Init(name string, version string) *Commander {
 		Description: "display version",
 		Required: false,
 		Callback: func(args ...string) {
-			fmt.Fprintf(os.Stdout, "  Version: %s\n", p.Version)
+			fmt.Fprintf(os.Stdout, "%s\n", p.Version)
 		},
 	})
 
@@ -134,7 +134,7 @@ func (commander *Commander) Usage() {
 
 	options := commander.Options
 	for i := range options {
-		fmt.Fprintf(os.Stderr, "    %s, %s %s",
+		fmt.Fprintf(os.Stderr, "    %s, %s %s\n",
 			options[i].Tiny, options[i].Verbose, options[i].Description)
 	}
 	fmt.Fprintf(os.Stderr, "\n")
