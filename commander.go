@@ -1,8 +1,8 @@
 package commander
 
 import (
-	"os"
 	"fmt"
+	"os"
 	"unicode/utf8"
 )
 
@@ -11,12 +11,12 @@ import (
  */
 
 type Option struct {
-	Name string
-	Tiny string
-	Verbose string
+	Name        string
+	Tiny        string
+	Verbose     string
 	Description string
-	Required bool
-	Callback func(...string)
+	Required    bool
+	Callback    func(...string)
 }
 
 /**
@@ -24,7 +24,7 @@ type Option struct {
  */
 
 type Commander struct {
-	Name string
+	Name    string
 	Version string
 	Options []Option
 }
@@ -35,27 +35,27 @@ type Commander struct {
 
 func Init(name string, version string) *Commander {
 	p := &Commander{
-		Name: name,
+		Name:    name,
 		Version: version,
 	}
 
 	p.Add(&Option{
-		Name: "help",
-		Tiny: "-h",
-		Verbose: "--help",
+		Name:        "help",
+		Tiny:        "-h",
+		Verbose:     "--help",
 		Description: "display usage",
-		Required: false,
+		Required:    false,
 		Callback: func(args ...string) {
 			p.Usage()
 		},
 	})
 
 	p.Add(&Option{
-		Name: "version",
-		Tiny: "-V",
-		Verbose: "--version",
+		Name:        "version",
+		Tiny:        "-V",
+		Verbose:     "--version",
 		Description: "display version",
-		Required: false,
+		Required:    false,
 		Callback: func(args ...string) {
 			fmt.Fprintf(os.Stdout, "%s\n", p.Version)
 		},
@@ -79,8 +79,8 @@ func (commander *Commander) Parse() {
 			arg := args[j]
 
 			if option.Tiny == arg || option.Verbose == arg {
-				if j != l  - 1 && args[j + 1][0] != '-' {
-					option.Callback(args[j + 1])
+				if j != l-1 && args[j+1][0] != '-' {
+					option.Callback(args[j+1])
 					j++
 				} else {
 					option.Callback()
@@ -104,7 +104,7 @@ func (commander *Commander) explode(args []string) []string {
 
 		if l > 2 && arg[0] == '-' && arg[1] != '-' {
 			for i := 1; i < l; i++ {
-				newargs = append(newargs, "-" + string(arg[i]))
+				newargs = append(newargs, "-"+string(arg[i]))
 			}
 		} else {
 			newargs = append(newargs, arg)
@@ -130,7 +130,7 @@ func (commander *Commander) Add(options ...*Option) {
 
 func (commander *Commander) Usage() {
 	fmt.Fprintf(os.Stderr, "\n  Usage: %s [options]\n\n", commander.Name)
-	fmt.Fprintf(os.Stderr, "  Options:\n");
+	fmt.Fprintf(os.Stderr, "  Options:\n")
 
 	options := commander.Options
 	for i := range options {
