@@ -90,7 +90,8 @@ func (commander *Commander) Parse() {
 		}
 		if option.Required && !found {
 			// Option is required and not found
-			fmt.Fprintf(os.Stderr, "%s, %s is required.", option.Tiny, option.Description)
+			fmt.Fprintf(os.Stderr, "Argument missing: %s, %s is required.\n",
+				option.Tiny, option.Description)
 		}
 	}
 }
